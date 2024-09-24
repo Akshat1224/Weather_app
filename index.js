@@ -20,7 +20,7 @@ const server = http.createServer((req, res) => {
     const city = query.city || "Mumbai";  // Default to Mumbai if no city is provided
     
     if (req.url.startsWith("/")) {
-        requests(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=d26c885fbfe4857715a829da9651f685&units=metric`)
+        requests(OPEN_API)
             .on('data', (chunk) => {
                 const weatherData = JSON.parse(chunk);
                 const arrData = [weatherData];
