@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      font-family: "Quicksand", sans-serif;
+    }
+
+    body {
+      background: url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?fit=crop&w=1950&q=80') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      width: 90%;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .box {
+      width: 50%;
+      height: 65vh;
+      border-radius: 1rem;
+      box-shadow: 0 0.2rem 3rem rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.9);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .wave {
+      opacity: 0.3;
+      position: absolute;
+      top: 120%;
+      left: 50%;
+      background: blue;
+      width: 50rem;
+      height: 50rem;
+      margin-left: -25rem;
+      margin-top: -25rem;
+      transform-origin: 50% 48%;
+      border-radius: 43%;
+      animation: drift 3000ms infinite linear;
+      z-index: 1;
+    }
+
+    .wave.-three {
+      animation: drift 5000ms infinite linear;
+      z-index: 2 !important;
+      opacity: 0.2;
+    }
+
+    .wave.-two {
+      animation: drift 7000ms infinite linear;
+      opacity: 0.1;
+      z-index: 3 !important;
+    }
+
+    @keyframes drift {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .info {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 45%;
+      z-index: 4;
+    }
+
+    .location {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-weight: 800;
+      font-size: 2.5rem;
+    }
+
+    #date {
+      text-align: center;
+      margin-top: 0.5rem;
+      color: #57606f;
+      font-size: 1.4rem;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+
+    .temp {
+      margin-top: 2rem;
+      font-size: 3rem;
+    }
+
+    .tempmin_max {
+      text-align: center;
+      margin-top: 0.3rem;
+      font-weight: 300;
+      font-size: 1.2rem;
+      color: #57606f;
+    }
+
+    #weathercon {
+      height: 55%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3em;
+    }
+
+    .form-box {
+      width: 30%;
+      height: 45vh;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0.2rem 3rem rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-box input {
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      border: none;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+      font-size: 1rem;
+    }
+
+    .form-box button {
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-box button:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+      .box {
+        width: 90vw;
+        height: 80vh;
+      }
+
+      .wave {
+        top: 85%;
+      }
+
+      #weathercon {
+        font-size: 5em;
+      }
+
+      .info {
+        font-size: 1.5rem;
+      }
+
+      .form-box {
+        width: 90vw;
+        height: auto;
+      }
+    }
+  </style>
+  <title>Weather App</title>
+</head>
+
+<body>
+  <div class="container">
+    <!-- City Search Form -->
+    <div class="form-box">
+      <h2>Check Weather</h2>
+      <form action="/" method="GET">
+        <input type="text" name="city" placeholder="Enter City Name" required />
+        <button type="submit">Get Weather</button>
+      </form>
+    </div>
+
+    <!-- Weather Data Display -->
+    <div class="box">
+      <div class="wave -one"></div>
+      <div class="wave -two"></div>
+      <div class="wave -three"></div>
+
+      <div id="weathercon">
+        <!-- Weather Icon will appear here -->
+      </div>
+
+      <div class="info">
+        <h2 class="location">
+          <i class="fas fa-street-view" style="color: #68ecc2"></i> {%location%}, {%country%}
+        </h2>
+        <p id="date"></p>
+        <h1 class="temp">{%temp_val%}&deg;C</h1>
+        <h3 class="tempmin_max">
+          Min: {%temp_min%}&deg;C | Max: {%temp_max%}&deg;C
+        </h3>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let weathercon = document.getElementById("weathercon");
+    const tempStatus = "{%tempStatus%}";
+
+    // Display appropriate weather icon based on the weather condition
+    if (tempStatus === "Clear") {
+      weathercon.innerHTML = "<i class='fas fa-sun' style='color: #eccc68;'></i>";
+    } else if (tempStatus === "Clouds") {
+      weathercon.innerHTML = "<i class='fas fa-cloud' style='color: #f1f2f6;'></i>";
+    } else if (tempStatus === "Rain") {
+      weathercon.innerHTML = "<i class='fas fa-cloud-rain' style='color: #a4b0be;'></i>";
+    } else {
+      weathercon.innerHTML = "<i class='fas fa-cloud' style='color:#f1f2f6;'></i>";
+    }
+
+    // Function to get the current day
+    const getCurrentDay = () => {
+      const weekDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      let day = new Date();
+      return weekDay[day.getDay()];
+    };
+
+    // Function to get the current time
+    const getCurrentTime = () => {
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      let now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let period = "AM";
+
+      if (hours >= 12) {
+        period = "PM";
+        if (hours > 12) hours -= 12;
+      }
+      if (minutes < 10) minutes = `0${minutes}`;
+
+      return `${months[now.getMonth()]} ${now.getDate()} | ${hours}:${minutes} ${period}`;
+    };
+
+    document.getElementById("date").innerHTML = `${getCurrentDay()} | ${getCurrentTime()}`;
+  </script>
+</body>
+
+</html>
