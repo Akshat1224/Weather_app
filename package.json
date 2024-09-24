@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "nodemon": "^3.1.7",
     "requests": "^0.3.0"
   }

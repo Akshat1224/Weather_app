@@ -179,6 +179,14 @@
         height: auto;
       }
     }
+
+    /* CSS for error message */
+    .error-message {
+      color: red;
+      font-size: 1rem;
+      text-align: center;
+      margin-top: 10px;
+    }
   </style>
   <title>Weather App</title>
 </head>
@@ -192,6 +200,7 @@
         <input type="text" name="city" placeholder="Enter City Name" required />
         <button type="submit">Get Weather</button>
       </form>
+      <div class="error-message">{%error_message%}</div>
     </div>
 
     <!-- Weather Data Display -->
@@ -208,7 +217,7 @@
         <h2 class="location">
           <i class="fas fa-street-view" style="color: #68ecc2"></i> {%location%}, {%country%}
         </h2>
-        <p id="date"></p>
+        <p id="date">{%local_time%}</p>
         <h1 class="temp">{%temp_val%}&deg;C</h1>
         <h3 class="tempmin_max">
           Min: {%temp_min%}&deg;C | Max: {%temp_max%}&deg;C
@@ -231,33 +240,6 @@
     } else {
       weathercon.innerHTML = "<i class='fas fa-cloud' style='color:#f1f2f6;'></i>";
     }
-
-    // Function to get the current day
-    const getCurrentDay = () => {
-      const weekDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      let day = new Date();
-      return weekDay[day.getDay()];
-    };
-
-    // Function to get the current time
-    const getCurrentTime = () => {
-      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-      let now = new Date();
-      let hours = now.getHours();
-      let minutes = now.getMinutes();
-      let period = "AM";
-
-      if (hours >= 12) {
-        period = "PM";
-        if (hours > 12) hours -= 12;
-      }
-      if (minutes < 10) minutes = `0${minutes}`;
-
-      return `${months[now.getMonth()]} ${now.getDate()} | ${hours}:${minutes} ${period}`;
-    };
-
-    document.getElementById("date").innerHTML = `${getCurrentDay()} | ${getCurrentTime()}`;
   </script>
 </body>
-
 </html>
