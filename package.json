@@ -1,7 +1,7 @@
 {
   "name": "weatherappnode",
   "version": "1.0.0",
-  "description": "",
+  "description": "��#\u0000 \u0000W\u0000e\u0000a\u0000t\u0000h\u0000e\u0000r\u0000_\u0000a\u0000p\u0000p\u0000\r\u0000 \u0000",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,17 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "nodemon": "^3.1.7",
+    "nodemon": "^3.1.9",
     "requests": "^0.3.0"
-  }
+  },
+  "devDependencies": {"nodemon": "^3.1.9"},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akshat1224/Weather_app.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Akshat1224/Weather_app/issues"
+  },
+  "homepage": "https://github.com/Akshat1224/Weather_app#readme"
 }
